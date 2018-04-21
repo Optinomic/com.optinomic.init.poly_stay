@@ -1,0 +1,71 @@
+__opapp_include(../lib/html/optinomic/page/start.m4)
+<md-content class="md-padding">
+    <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="space-between center">
+        <md-input-container flex ng-class="md-block">
+            <label>Fall | Behandlung</label>
+            <md-select ng-model="d.belegung.selected">
+                <md-option ng-repeat="bel in d.belegung.alle" ng-value="bel">
+                    {{bel.bel_selector.eintritt | date}} - {{bel.bel_selector.austritt | date}} | {{bel.bel_selector.name}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+    <div ng-if="d.belegung.aktuell_letzter.bel_all !== null">
+        <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="space-between center">
+            <div flex="25">
+                <h3 class="md-title">{{d.belegung.selected.bel_selector.name}} <span class="md-caption">{{d.belegung.selected.bel_selector.bel_id}}</span></h3>
+            </div>
+            <div flex>
+                <h3 class="md-body-1">Von - Bis | Anzahl Tage</h3>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <div ng-repeat="bel in d.belegung.selected.bel_all.rows">
+            <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="space-between center">
+                <div flex="5">
+                    &nbsp;
+                </div>
+                <div flex="20">
+                    <h3 class="md-caption">{{bel.ORG}} | {{bel.STATION}} | {{bel.ZIMMER}}</h3>
+                </div>
+                <div flex>
+                    <h3 class="md-caption">{{bel.BEGINN | date}} - {{bel.ENDE | date}} | {{bel.DAUER_TAGE}} Tage</h3>
+                </div>
+            </div>
+        </div>
+        <md-divider></md-divider>
+        <div layout="row" layout-xs="row" layout-gt-xs="row" layout-align="space-between center">
+            <div flex>
+                <h3 class="md-caption">Optinomic PID: {{d.belegung.selected.bel_selector.optinomic_pid}}</h3>
+            </div>
+            <div flex>
+                <h3 class="md-caption">Optinomic FID: {{d.belegung.selected.bel_selector.optinomic_fid}}</h3>
+            </div>
+            <div flex>
+                <h3 class="md-caption">Polypoint PID: {{d.belegung.selected.bel_selector.polypoint_pid}} | {{d.belegung.selected.bel_selector.polypoint_paid}}</h3>
+            </div>
+            <div flex>
+                <h3 class="md-caption">Polypoint FID: {{d.belegung.selected.bel_selector.polypoint_fid}} | {{d.belegung.selected.bel_selector.polypoint_faid}}</h3>
+            </div>
+        </div>
+        <div>
+            <p>&nbsp;</p>
+        </div>
+    </div>
+    <div>
+        <h3 class="md-title">Übersicht</h3>
+        <p class="md-body-1">Folgende Behandlungs-Typen sind bekannt:</p>
+        <div ng-repeat="(key, b) in d.belegung.war_einmal_legende" layout="row" layout-xs="row" layout-gt-xs="row" layout-align="space-between center" ng-if="d.belegung.war_einmal[b.bel_id]">
+            <div flex="5">
+                <p class="md-caption">- </p>
+            </div>
+            <div flex>
+                <p class="md-caption">{{b.description}} ({{b.name}})</p>
+            </div>
+            <div>
+                <p class="md-caption">{{b.bel_id}}</p>
+            </div>
+        </div>
+    </div>
+</md-content>
+__opapp_include(../lib/html/optinomic/page/end.m4)
